@@ -55,7 +55,8 @@ const styles = {
     slideText: {
         fontSize: 30,
         textAlign: 'center',
-        color: 'white'
+        color: 'white',
+        marginHorizontal: 70
     },
     buttonStyle: {
         backgroundColor: '#028801',
