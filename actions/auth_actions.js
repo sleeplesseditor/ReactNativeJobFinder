@@ -5,7 +5,7 @@ import {
     FACEBOOK_LOGIN_FAIL
 } from './types';
 
-export const facebooklogin = () => async dispatch => {
+export const facebookLogin = () => async dispatch => {
     let token = await AsyncStorage.getItem('fb_token');
     if (token) {
         //Dispatch action as FB login done
