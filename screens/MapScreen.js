@@ -1,16 +1,42 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { MapView } from 'expo';
 
 class MapScreen extends Component {
+    state = {
+        mapLoaded: false,
+        //Enter initial regional focus coordinates here
+        region: {
+            longitude: -122,
+            latitude: 37,
+            longitudeDelta: 0.04,
+            latitudeDelta: 0.09
+        }
+    }
+
+    componentDidMount() {
+        this.setState({ mapLoaded: true });
+    }
+
+    onRegionChangeComplete = (region) => {
+        this.setState({ region });
+    }
+
     render() {
+        if (!this.state.mapLoaded) {
+            return (
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <ActivityIndicator size="large" />
+                </View>
+            )
+        }
         return (
-            <View>
-                <Text>MapScreen</Text>
-                <Text>MapScreen</Text>
-                <Text>MapScreen</Text>
-                <Text>MapScreen</Text>
-                <Text>MapScreen</Text>
-                <Text>MapScreen</Text>
+            <View style={{ flex: 1 }}>
+                <MapView 
+                    region={this.state.region}
+                    style={{ flex: 1}}
+                    onRegionChangeComplete={this.onRegionChangeComplete} 
+                />
             </View>
         );
     }
