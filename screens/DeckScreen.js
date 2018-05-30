@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
+import Swipe from '../components/Swipe';
 
 class DeckScreen extends Component {
     render() {
         return (
             <View>
-                <Text>DeckScreen</Text>
-                <Text>DeckScreen</Text>
-                <Text>DeckScreen</Text>
-                <Text>DeckScreen</Text>
-                <Text>DeckScreen</Text>
-                <Text>DeckScreen</Text>
+                <Swipe 
+                    data={this.props.jobs}
+                />
             </View>
         );
     }
 }
 
-export default DeckScreen;
+function mapStateToProps({ jobs }) {
+    return { jobs: jobs.results };
+}
+
+export default connect(mapStateToProps)(DeckScreen);

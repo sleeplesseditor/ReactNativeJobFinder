@@ -26,7 +26,9 @@ class MapScreen extends Component {
     }
 
     onButtonPress = () => {
-        this.props.fetchJobs(this.state.region);
+        this.props.fetchJobs(this.state.region, () => {
+            this.props.navigation.navigate('deck');
+        });
     }
 
     render() {
@@ -41,7 +43,7 @@ class MapScreen extends Component {
             <View style={{ flex: 1 }}>
                 <MapView 
                     region={this.state.region}
-                    style={{ flex: 1}}
+                    style={{ flex: 1 }}
                     onRegionChangeComplete={this.onRegionChangeComplete} 
                 />
                 <View style={styles.buttonContainer}>
@@ -57,7 +59,6 @@ class MapScreen extends Component {
         );
     }
 }
-
 
 const styles = {
     buttonContainer: {
