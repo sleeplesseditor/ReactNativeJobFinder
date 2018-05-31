@@ -65,7 +65,7 @@ class DeckScreen extends Component {
     
     render() {
         return (
-            <View style={{ marginTop: 10 }}>
+            <View style={{ marginTop: 20 }}>
                 <Swipe 
                     data={this.props.jobs}
                     renderCard={this.renderCard}

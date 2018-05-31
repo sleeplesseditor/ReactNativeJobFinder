@@ -96,7 +96,7 @@ class Swipe extends Component {
       return this.props.renderNoMoreCards();
     }
 
-    return this.props.data.map((item, i) => {
+    const deck = this.props.data.map((item, i) => {
       if (i < this.state.index) { return null; }
 
       if (i === this.state.index) {
@@ -114,7 +114,7 @@ class Swipe extends Component {
       return (
         <Animated.View
           key={item[this.props.keyProp]}
-          style={[styles.cardStyle, { top: 10 * (i - this.state.index)}]}
+          style={[styles.cardStyle, { top: 10 * (i - this.state.index), zIndex: -i }]}
         >
           {this.props.renderCard(item)}
         </Animated.View>
