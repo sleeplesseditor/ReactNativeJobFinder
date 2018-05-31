@@ -24,14 +24,18 @@ class DeckScreen extends Component {
         };
 
         return (
-            <Card title={job.jobtitle}>
+            <Card 
+                title={job.jobtitle}
+                containerStyle={{ height: 500 }}
+            >
                 <View style={{ height: 300 }}>
                     <MapView
                         scrollEnabled={false}
                         style={{ flex: 1 }}
-                        cacheEnabled={Platform.OS === 'android' ? true : false }
+                        cacheEnabled={Platform.OS === 'android' }
                         initialRegion={initialRegion}
                     >
+                        <MapView.Marker coordinate={initialRegion} />
                     </MapView>
                 </View>
                 <View style={styles.detailWrapper}>
@@ -39,7 +43,7 @@ class DeckScreen extends Component {
                     <Text>{job.formattedRelativeTime}</Text>
                 </View>
                 <Text>
-                    {job.snippet.replace(/<b>/g, '').replace(/<\/b/g, '')}
+                    {job.snippet.replace(/<\/*b>/g, '')}
                 </Text>
             </Card>
         );
@@ -47,7 +51,7 @@ class DeckScreen extends Component {
 
     renderNoMoreCards = () => {
         return (
-            <Card title="No More Jobs">
+            <Card title="No More Jobs Found">
                 <Button 
                     title="Back to Map"
                     large

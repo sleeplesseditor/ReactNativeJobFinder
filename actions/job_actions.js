@@ -8,7 +8,7 @@ import {
 
 const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
 const JOB_QUERY_PARAMS = {
-    publisher: '4201738803816157',
+    publisher: '4022372635962623',
     format: 'json',
     v: '2',
     latlong: 1 ,

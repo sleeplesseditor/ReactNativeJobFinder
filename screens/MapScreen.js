@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class MapScreen extends Component {
+    static navigationOptions = {
+        title: 'Map',
+        tabBarIcon: ({ tintColor }) => {
+            return <Icon name="my-location" size={30} color={tintColor} />;
+        }
+    }
+
     state = {
         mapLoaded: false,
         //Enter initial regional focus coordinates here
@@ -22,7 +29,11 @@ class MapScreen extends Component {
     }
 
     onRegionChangeComplete = (region) => {
-        this.setState({ region });
+        let i = 0;
+        if(i > 0) {
+            this.setState({ region });
+        }
+        i++;
     }
 
     onButtonPress = () => {
@@ -68,6 +79,5 @@ const styles = {
         right: 0
     }
 }
-
 
 export default connect(null, actions)(MapScreen);

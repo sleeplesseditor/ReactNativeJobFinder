@@ -17,7 +17,8 @@ class Swipe extends Component {
   static defaultProps = {
     onSwipeRight: () => {},
     onSwipeLeft: () => {},
-    keyProp: 'id'
+    keyProp: 'id',
+    data: []
   }
 
   constructor(props) {
@@ -44,7 +45,7 @@ class Swipe extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.props.data) {
+    if (nextProps !== this.props.data) {
       this.setState({ index: 0 });
     }
   }
@@ -95,14 +96,14 @@ class Swipe extends Component {
       return this.props.renderNoMoreCards();
     }
 
-    const deck = this.props.data.map((item, i) => {
+    return this.props.data.map((item, i) => {
       if (i < this.state.index) { return null; }
 
       if (i === this.state.index) {
         return (
           <Animated.View
             key={item[this.props.keyProp]}
-            style={[this.getCardStyle(), styles.cardStyle, { zIndex: 99 }]}
+            style={[this.getCardStyle(), styles.cardStyle]}
             {...this.state.panResponder.panHandlers}
           >
             {this.props.renderCard(item)}
@@ -113,7 +114,7 @@ class Swipe extends Component {
       return (
         <Animated.View
           key={item[this.props.keyProp]}
-          style={[styles.cardStyle, { top: 10 * (i - this.state.index), zIndex: -i }]}
+          style={[styles.cardStyle, { top: 10 * (i - this.state.index)}]}
         >
           {this.props.renderCard(item)}
         </Animated.View>
@@ -135,7 +136,8 @@ class Swipe extends Component {
 const styles = {
   cardStyle: {
     position: 'absolute',
-    width: SCREEN_WIDTH
+    width: SCREEN_WIDTH,
+    elevation: 1
   }
 };
 
