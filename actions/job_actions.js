@@ -1,11 +1,12 @@
 import axios from 'axios';
+import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
 
 import {
     FETCH_JOBS
 } from './types';
 
-const JOB_ROOT_URL = 'https://api.indeed.com/ds/apisearch?';
+const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
 const JOB_QUERY_PARAMS = {
     publisher: '4201738803816157',
     format: 'json',
@@ -15,41 +16,43 @@ const JOB_QUERY_PARAMS = {
     q: 'javascript'
 };
 
-const GOOGLE_API_KEY = 'AIzaSyCyOoI2nXrMl97gO0qoB3Pe28cUhCnUWYw';
-const GEOCODE_ROOT_URL = `https://maps.googleapis.com/maps/api/geocode/json?`;
+//Alternative to latlng-to-zip using Google Geocoding
+
+// const GOOGLE_API_KEY = 'AIzaSyCyOoI2nXrMl97gO0qoB3Pe28cUhCnUWYw';
+// const GEOCODE_ROOT_URL = `https://maps.googleapis.com/maps/api/geocode/json?`;
  
-const buildGeocodeUrl = ({ longitude, latitude }) => {
- const query = qs.stringify({ key: GOOGLE_API_KEY, latlng: `${latitude},${longitude}` });
- return `${GEOCODE_ROOT_URL}${query}`;
-};
+// const buildGeocodeUrl = ({ longitude, latitude }) => {
+//  const query = qs.stringify({ key: GOOGLE_API_KEY, latlng: `${latitude},${longitude}` });
+//  return `${GEOCODE_ROOT_URL}${query}`;
+// };
  
-const reverseGeocode = async (region) => {
- const url = buildGeocodeUrl(region);
- let { data } = await axios.get(url);
+// const reverseGeocode = async (region) => {
+//  const url = buildGeocodeUrl(region);
+//  let { data } = await axios.get(url);
  
- if (data.error_message) {
-     throw new Error(data.error_message);
- }
+//  if (data.error_message) {
+//      throw new Error(data.error_message);
+//  }
  
- const { results } = data;
+//  const { results } = data;
  
- if (results.length === 0) {
-     throw new Error('No Results');
- }
+//  if (results.length === 0) {
+//      throw new Error('No Results');
+//  }
  
- const postCode = results[0].address_components.find(
-     component => component.types[0] === 'postal_code'
- );
+//  const postCode = results[0].address_components.find(
+//      component => component.types[0] === 'postal_code'
+//  );
  
- if (!postCode) {
-     throw new Error('No Postcode');
- }
+//  if (!postCode) {
+//      throw new Error('No Postcode');
+//  }
  
- return postCode.long_name || postCode.short_name;
-};
+//  return postCode.long_name || postCode.short_name;
+// };
 
 const buildJobsUrl = (zip) => {
-    const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip })
+    const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip });
     return `${JOB_ROOT_URL}${query}`;
 };
 
