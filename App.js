@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 import { Provider } from 'react-redux';
 
 import store from './store';
@@ -9,7 +10,6 @@ import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
-import SettingScreen from './screens/SettingScreen';
 import ReviewScreen from './screens/ReviewScreen';
 
 export default class App extends React.Component {
@@ -19,15 +19,17 @@ export default class App extends React.Component {
       auth: AuthScreen,
       main: {
         screen: createBottomTabNavigator({
-          map: MapScreen,
-          deck: DeckScreen,
-          review: {
-            screen: createStackNavigator({
-              review: ReviewScreen,
-              settings: SettingScreen
-            })
+          map: { screen: MapScreen },
+          deck: { screen: DeckScreen },
+          review: { screen: ReviewScreen },
+        }, {
+          tabBarPosition: 'bottom',
+          tabBarOptions: {
+            labelStyle: { 
+              fontSize: 12
+            }
           }
-        })
+        }) 
       } 
     }, {
       navigationOptions: {

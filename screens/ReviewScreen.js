@@ -2,25 +2,16 @@ import React, { Component } from 'react';
 import { Linking, Platform, ScrollView, Text, View } from 'react-native';
 import { Button, Card, Icon } from 'react-native-elements';
 import { MapView } from 'expo';
+import { clearLikedJobs } from '../actions';
 import { connect } from 'react-redux';
 
 class ReviewScreen extends Component {
-    static navigationOptions = props => {
-        const { navigation } = props;
-        const { navigate } = navigation;
-        return {
-            headerTitle: 'Review Jobs',
-            headerRight: 
-                (<Button title='Settings'
-                onPress = { () => navigate('settings') }
-                backgroundColor = 'rgba(0,0,0,0)'
-                color = 'rgba(0, 122, 125, 1)' 
-                /> 
-                ),
-                style: {
-                    marginTop: Platform.OS === 'android' ? 24 : 0    
-                }
-        };
+
+    static navigationOptions = {
+        title: 'Review Jobs',
+        tabBarIcon: ({ tintColor }) => {
+            return <Icon name="favorite" size={30} color={tintColor} />;
+        }
     }
 
     renderLikedJobs() {
@@ -56,15 +47,24 @@ class ReviewScreen extends Component {
             );
         });
     }
-
+    
     render() {
         return (
-            <ScrollView>
+            <ScrollView style={{ marginTop: 20 }}>
                 {this.renderLikedJobs()}
+                <Button 
+                    title="Reset Liked Jobs"
+                    large
+                    icon={{ name: 'delete-forever' }}
+                    backgroundColor="#F44336"
+                    onPress={this.props.clearLikedJobs}
+                    style={{ marginTop: 25 }}
+                />
             </ScrollView>
         );
     }
 }
+
 
 const styles = {
     italics: {
@@ -82,4 +82,4 @@ function mapStateToProps(state) {
     return { likedJobs: state.likedJobs };
 }
 
-export default connect(mapStateToProps)(ReviewScreen);
+export default connect(mapStateToProps, { clearLikedJobs })(ReviewScreen);
